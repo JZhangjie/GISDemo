@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/corner_radius"
+    android:layout_marginRight="@dimen/unit_width"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_margin="@dimen/unit_width"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="128dp"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:text="离线影像图层"/>
+            <ToggleButton
+                android:id="@+id/layercontrol_toggle_lx_yx"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="#00000000"
+                style="@style/ToggleButton"
+                android:checked="false"
+                android:textOff=""
+                android:textOn=""/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="160dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="128dp"
+                android:layout_height="64dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="128dp"
+                    android:gravity="center_vertical"
+                    android:layout_height="32dp"
+                    android:text="在线矢量图层" />
+                <TextView
+                    android:layout_width="128dp"
+                    android:layout_height="32dp"
+                    android:gravity="center_vertical"
+                    android:text="在线影像图层" />
+            </LinearLayout>
+            <RadioGroup
+                android:orientation="vertical"
+                android:id="@+id/layercontrol_toggle_zx_rgp"
+                android:layout_width="32dp"
+                android:layout_height="64dp">
+                <RadioButton
+                    android:id="@+id/layercontrol_toggle_zx_sl"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
+                <RadioButton
+                    android:id="@+id/layercontrol_toggle_zx_yx"
+                    android:checked="true"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v7.widget.CardView>
