@@ -35,6 +35,7 @@ public class FileHelper {
         return path;
     }
 
+    // 使用/结尾的表示文件夹，没有的表示文件
     public static File getPath(String relativePath) {
         String path = getRootPath();
         String filename = null;
@@ -63,6 +64,7 @@ public class FileHelper {
         return new File(path);
     }
 
+    //最长边压缩为1024px
     public static void compressImage(File file) {
         compressImage(file.getAbsolutePath());
     }
@@ -119,6 +121,7 @@ public class FileHelper {
         }
     }
 
+    //文件大小压缩小于等于filesize KB
     public static void compressImage(File file, float filesize) {
         compressImage(file.getAbsolutePath(), filesize);
     }

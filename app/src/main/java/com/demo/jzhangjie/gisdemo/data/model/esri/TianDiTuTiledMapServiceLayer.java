@@ -1,4 +1,4 @@
-package com.demo.jzhangjie.gisdemo.data.model.layer;
+package com.demo.jzhangjie.gisdemo.data.model.esri;
 
 import android.text.TextUtils;
 import android.util.Log;

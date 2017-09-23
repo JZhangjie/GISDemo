@@ -7,5 +7,6 @@ import com.demo.jzhangjie.gisdemo.data.BaseModel;
  */
 
 public class Case extends BaseModel {
-
+    public void test(){
+    }
 }

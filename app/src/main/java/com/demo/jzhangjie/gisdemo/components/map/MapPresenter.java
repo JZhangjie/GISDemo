@@ -1,16 +1,29 @@
 package com.demo.jzhangjie.gisdemo.components.map;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.demo.jzhangjie.gisdemo.constant.ApplicationConstant;
-import com.demo.jzhangjie.gisdemo.data.model.layer.TianDiTuTiledMapServiceLayer;
+import com.demo.jzhangjie.gisdemo.data.model.DBCase;
+import com.demo.jzhangjie.gisdemo.data.model.esri.DBGraphicsLayer;
+import com.demo.jzhangjie.gisdemo.data.model.esri.TianDiTuTiledMapServiceLayer;
 import com.demo.jzhangjie.gisdemo.utils.FileHelper;
+import com.esri.android.map.GraphicsLayer;
 import com.esri.android.map.Layer;
 import com.esri.android.map.ags.ArcGISLocalTiledLayer;
 import com.esri.core.geometry.Geometry;
+import com.esri.core.map.Graphic;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by admin on 2017/9/20.
@@ -52,6 +65,31 @@ public class MapPresenter implements MapContract.Presenter {
                 .setStyle("default")
                 .setFormat("tiles")
                 .setTileMatrixSet("c").builder();;
+
+        try {
+            final DBGraphicsLayer<DBCase>  layer = new DBGraphicsLayer<DBCase>(GraphicsLayer.RenderingMode.STATIC,FileHelper.getPath("446655000000.db").getAbsolutePath(),DBCase.class);
+            Observable<Integer> observable = Observable.create(new ObservableOnSubscribe<Integer>() {
+                @Override
+                public void subscribe(@NonNull ObservableEmitter<Integer> e) throws Exception {
+                    e.onNext(layer.load());
+                }
+            });
+            observable.observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(new Consumer<Integer>() {
+                        @Override
+                        public void accept(@NonNull Integer integer) throws Exception {
+                            MapPresenter.this.addLayer(layer);
+                            int[] ids = layer.getGraphicIDs();
+                            Graphic graphic = layer.getGraphic(ids[0]);
+                            MapPresenter.this.zoomTo(graphic.getGeometry());
+                            Log.d("DEBUG","加载成功++++++++++++++"+ids.length);
+                        }
+                    });
+            layer.load();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.addLayer(mZXYXLayer);
         this.addLayer(mZXSLLayer);
         this.addLayer(mLXYXLayer);
@@ -93,6 +131,6 @@ public class MapPresenter implements MapContract.Presenter {
 
     @Override
     public void zoomTo(Geometry geometry) {
-
+        this.mView.zoomTo(geometry);
     }
 }
